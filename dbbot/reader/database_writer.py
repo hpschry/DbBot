@@ -132,7 +132,8 @@ class DatabaseWriter(RobotDatabase):
             'keyword_id': 'INTEGER NOT NULL REFERENCES keywords',
             'level': 'TEXT NOT NULL',
             'timestamp': 'DATETIME NOT NULL',
-            'content': 'TEXT NOT NULL'
+            'content': 'TEXT NOT NULL',
+            'keyword_status_id': 'INTEGER'
         }, ('keyword_id', 'level', 'content'))
 
     def _create_table_tags(self):

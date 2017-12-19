@@ -188,22 +188,23 @@ class RobotResultsParser(object):
                 'type': keyword.type
             })
         self._parse_keyword_status(test_run_id, keyword_id, keyword)
-        self._parse_messages(keyword.messages, keyword_id)
+        # self._parse_messages(keyword.messages, keyword_id)
         self._parse_arguments(keyword.args, keyword_id)
         self._parse_keywords(keyword.keywords, test_run_id, None, None, keyword_id)
 
     def _parse_keyword_status(self, test_run_id, keyword_id, keyword):
-        self._db.insert_or_ignore('keyword_status', {
+        keyword_status_id = self._db.insert('keyword_status', {
             'test_run_id': test_run_id,
             'keyword_id': keyword_id,
             'status': keyword.status,
             'elapsed': keyword.elapsedtime
         })
+        self._parse_messages(keyword.messages, keyword_id, keyword_status_id)
 
-    def _parse_messages(self, messages, keyword_id):
-        self._db.insert_many_or_ignore('messages', ('keyword_id', 'level', 'timestamp', 'content'),
+    def _parse_messages(self, messages, keyword_id, keyword_status_id):
+        self._db.insert_many_or_ignore('messages', ('keyword_id', 'level', 'timestamp', 'content', 'keyword_status_id'),
             [(keyword_id, message.level, self._format_robot_timestamp(message.timestamp),
-            message.message) for message in messages]
+            message.message, keyword_status_id) for message in messages]
         )
 
     def _parse_arguments(self, args, keyword_id):
