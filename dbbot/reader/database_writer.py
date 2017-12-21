@@ -79,7 +79,7 @@ class DatabaseWriter(RobotDatabase):
             'name': 'TEXT NOT NULL',
             'source': 'TEXT',
             'doc': 'TEXT'
-        }, ('name', 'source'))
+        }, ('xml_id',))
 
     def _create_table_suite_status(self):
         self._create_table('suite_status', {
@@ -134,7 +134,7 @@ class DatabaseWriter(RobotDatabase):
             'timestamp': 'DATETIME NOT NULL',
             'content': 'TEXT NOT NULL',
             'keyword_status_id': 'INTEGER'
-        }, ('keyword_id', 'level', 'content'))
+        }, ('keyword_id', 'level', 'content', 'keyword_status_id'))
 
     def _create_table_tags(self):
         self._create_table('tags', {

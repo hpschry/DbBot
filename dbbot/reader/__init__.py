@@ -13,4 +13,4 @@
 #  limitations under the License.
 from .database_writer import DatabaseWriter
 from .reader_options import ReaderOptions
-from .robot_results_parser import RobotResultsParser
+from .robot_results_api_parser import RobotResultsAPIParser
